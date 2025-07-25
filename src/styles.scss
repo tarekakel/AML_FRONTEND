@@ -1,1 +1,81 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* styles.css or styles.scss */
+
+/* Positioning (you can change to bottom-left, etc.) */
+.toast-top-right {
+    @apply fixed top-5 right-5 z-[9999] space-y-4;
+}
+
+/* Base toast container */
+.toast {
+    @apply relative flex items-center p-4 pr-6 rounded-2xl shadow-xl border border-gray-200 backdrop-blur-sm bg-white/70 text-gray-900 transition-all duration-300;
+}
+
+/* Icons (optional) */
+.toast:before {
+    @apply mr-3 text-lg;
+}
+
+/* Success Toast */
+.toast-success {
+    @apply border-green-300 text-green-800;
+}
+
+/* Error Toast */
+.toast-error {
+    color: white;
+    background-color: #ea3939b4;
+    border-radius: 10px;
+    padding: 10px
+}
+
+/* Info Toast */
+.toast-info {
+    @apply border-blue-300 text-blue-800;
+}
+
+/* Warning Toast */
+.toast-warning {
+    @apply border-yellow-300 text-yellow-800;
+}
+
+.toast {
+    @apply opacity-0 animate-fade-in;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.3s ease forwards;
+}
+
+
+/* ngx-toastr */
+.toast-success {
+    background-color: #28a745 !important;
+    /* your green */
+    color: #ffffff !important;
+    /* white font */
+    padding: 5px;
+    border-radius: 10px;
+}
+
+/* If you need to override title/message separately */
+.toast-success .toast-title,
+.toast-success .toast-message {
+    color: #ffffff !important;
+}

@@ -1,0 +1,76 @@
+<div class="min-h-screen flex">
+    <!-- Left Image -->
+    <div class="hidden md:flex w-1/2 bg-gradient-to-br from-blue-800 to-blue-500 items-center justify-center">
+
+        <div class="w-full h-screen bg-cover bg-center" style="background-image: url('assets/images/back-ground.png')">
+            <!-- Content here -->
+        </div>
+    </div>
+
+    <!-- Right Form -->
+    <div class="flex flex-col justify-center items-center w-full md:w-1/2 px-8 py-12">
+        <h2 class="text-3xl font-bold mb-6">Create your account</h2>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="w-full max-w-sm space-y-5">
+            <div>
+                <label class="block mb-1 font-medium">Email</label>
+                <input formControlName="email" type="email"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                <div class="text-red-500 text-sm mt-1"
+                    *ngIf="getControl('email')?.invalid && getControl('email')?.touched">
+                    Valid email is required.
+                </div>
+            </div>
+
+            <div>
+                <label class="block mb-1 font-medium">Password</label>
+                <input formControlName="password" type="password"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                <div class="text-red-500 text-sm mt-1"
+                    *ngIf="getControl('password')?.invalid && getControl('password')?.touched">
+                    Password is required.
+                </div>
+
+                <div class="text-red-500 text-sm mt-1"
+                    *ngIf="getControl('password')?.errors?.['complexPassword'] && getControl('password')?.touched">
+                    Password must be at least 8 characters and include uppercase, lowercase, number, and special
+                    character.
+                </div>
+
+            </div>
+            <div>
+                <label class="block mb-1 font-medium">Confirm Password</label>
+                <input formControlName="re_password" type="password"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                <div class="text-red-500 text-sm mt-1"
+                    *ngIf="getControl('re_password')?.invalid && getControl('re_password')?.touched">
+                    Confirm Password is required.
+                </div>
+                <div class="text-red-500 text-sm mt-1"
+                    *ngIf="form.errors?.['passwordMismatch'] && getControl('re_password')?.touched">
+                    Passwords do not match.
+                </div>
+
+
+            </div>
+
+            <div *ngIf="error?.length" class="text-red-600 text-sm text-center">
+                <ul class="list-none">
+                    <li *ngFor="let errMsg of error">{{ errMsg }}</li>
+                </ul>
+            </div>
+
+
+            <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Register
+            </button>
+        </form>
+
+        <p class="mt-6 text-sm">
+            Already have an account?
+            <a routerLink="/auth/login"
+                class="text-blue-600 hover:text-blue-800 font-medium underline hover:no-underline transition duration-200 cursor-pointer">Login
+                here</a>
+        </p>
+    </div>
+</div>
