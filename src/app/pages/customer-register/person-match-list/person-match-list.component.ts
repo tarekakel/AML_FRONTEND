@@ -8,9 +8,10 @@ import { catchError, EMPTY, tap } from 'rxjs';
 import { ExportService } from '../../../services/export/export.service';
 
 @Component({
-  selector: 'app-person-match-list',
-  templateUrl: './person-match-list.component.html',
-  styleUrl: './person-match-list.component.scss'
+    selector: 'app-person-match-list',
+    templateUrl: './person-match-list.component.html',
+    styleUrl: './person-match-list.component.scss',
+    standalone: false
 })
 export class PersonMatchListComponent implements OnInit {
 

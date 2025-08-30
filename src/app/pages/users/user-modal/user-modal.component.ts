@@ -3,10 +3,10 @@ import { User } from '../../../models/user';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-user-modal',
-
-  templateUrl: './user-modal.component.html',
-  styleUrl: './user-modal.component.scss'
+    selector: 'app-user-modal',
+    templateUrl: './user-modal.component.html',
+    styleUrl: './user-modal.component.scss',
+    standalone: false
 })
 export class UserModalComponent implements OnInit, OnChanges {
   @Input() user: User | null = null;

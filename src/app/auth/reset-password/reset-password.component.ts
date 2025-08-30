@@ -9,11 +9,10 @@ import { ApiResponse } from '../../models/shared';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-reset-password',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.scss'
+    selector: 'app-reset-password',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+    templateUrl: './reset-password.component.html',
+    styleUrl: './reset-password.component.scss'
 })
 export class ResetPasswordComponent {
 

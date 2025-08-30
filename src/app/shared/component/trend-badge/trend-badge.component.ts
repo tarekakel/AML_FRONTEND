@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-trend-badge',
-  imports: [],
+  standalone: false,
   templateUrl: './trend-badge.component.html',
   styleUrl: './trend-badge.component.scss'
 })
-export class TrendBadgeComponent {
 
-}
+
+export class TrendBadgeComponent { @Input() value = 0; get isUp() { return this.value >= 0 } }

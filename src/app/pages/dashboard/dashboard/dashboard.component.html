@@ -1,0 +1,19 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4">
+  <ng-container *ngFor="let item of kpiItems">
+    <app-kpi-card [label]="item.title" [value]="item.data[0]?.count" [bgColor]="kpiColors[item.code]">
+    </app-kpi-card>
+  </ng-container>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 p-4">
+  <ng-container *ngFor="let cfg of chartConfigs">
+
+    <app-chart-bar *ngIf="cfg.chartType=='bar'" [title]="cfg.title" [categories]="cfg.categories" [series]="cfg.series"
+      [stacked]="cfg.stackedBar" [colors]="['#EF4444','#10B981','#FACC15']">
+    </app-chart-bar>
+
+    <app-chart-line *ngIf="cfg.chartType=='line'" [title]="cfg.title" [categories]="cfg.categories"
+      [series]="cfg.series" [stacked]="cfg.stackedBar" [colors]="['#EF4444','#10B981','#FACC15']">
+    </app-chart-line>
+  </ng-container>
+</div>

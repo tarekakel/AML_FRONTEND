@@ -4,11 +4,10 @@ import { Router, RouterModule } from '@angular/router';
 import { MenuItem } from '../../models/permission';
 import { MenuService } from '../../services/menu/menu.service';
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+    selector: 'app-sidebar',
+    imports: [CommonModule, RouterModule],
+    templateUrl: './sidebar.component.html',
+    styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
   @Input() collapsed = false;

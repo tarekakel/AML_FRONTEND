@@ -2,9 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-confim-dialoge',
-  templateUrl: './confim-dialoge.component.html',
-  styleUrl: './confim-dialoge.component.scss'
+    selector: 'app-confim-dialoge',
+    templateUrl: './confim-dialoge.component.html',
+    styleUrl: './confim-dialoge.component.scss',
+    standalone: false
 })
 export class ConfimDialogeComponent {
 

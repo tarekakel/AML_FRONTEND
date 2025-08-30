@@ -10,9 +10,10 @@ import { ToastrService } from 'ngx-toastr';
 import {extractErrorMessage} from '../../shared/helper/helper';
 import { formatDate } from '@angular/common';
 @Component({
-  selector: 'app-customer-register',
-  templateUrl: './customer-register.component.html',
-  styleUrl: './customer-register.component.scss'
+    selector: 'app-customer-register',
+    templateUrl: './customer-register.component.html',
+    styleUrl: './customer-register.component.scss',
+    standalone: false
 })
 export class CustomerRegisterComponent implements OnInit {
   steps = [1, 2, 3];

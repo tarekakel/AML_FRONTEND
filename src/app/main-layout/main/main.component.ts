@@ -6,11 +6,10 @@ import { RouterOutlet } from "@angular/router";
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-main',
-  standalone: true,
-  imports: [SidebarComponent, NavbarComponent, BreadcrumbComponent, RouterOutlet, CommonModule],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.scss'
+    selector: 'app-main',
+    imports: [SidebarComponent, NavbarComponent, BreadcrumbComponent, RouterOutlet, CommonModule],
+    templateUrl: './main.component.html',
+    styleUrl: './main.component.scss'
 })
 export class MainComponent {
   isSidebarCollapsed = false;

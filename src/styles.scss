@@ -184,3 +184,11 @@ span.selected.ng-star-inserted {
     color: #F7FAFC !important;
     /* almost-white text */
 }
+
+.apexcharts-tooltip {
+  font-size: 0.75rem; /* Tailwind text-xs */
+}
+
+.apexcharts-datalabels text {
+  font-weight: 600;
+}

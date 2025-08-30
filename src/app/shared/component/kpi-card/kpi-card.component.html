@@ -1,1 +1,14 @@
-<p>kpi-card works!</p>
+<div
+  class="bg-white rounded-2xl shadow p-4 flex items-start gap-4 border border-slate-100 hover:shadow-lg transition-shadow duration-300">
+  <div   class="shrink-0 rounded-xl bg-slate-50 p-3 flex items-center justify-center text-slate-700" [style.background]="bgColor">
+ 
+  </div>
+  <div class="flex-1">
+    <div class="text-sm text-slate-500">{{ label }}</div>
+    <div class="mt-1 text-2xl font-bold text-slate-900">{{ displayedValue | number }}</div>
+    <div class="mt-2 text-xs text-slate-500 flex items-center gap-2">
+      <app-trend-badge *ngIf="trend !== undefined" [value]="trend"></app-trend-badge>
+      <span *ngIf="hint">{{ hint }}</span>
+    </div>
+  </div>
+</div>

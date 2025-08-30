@@ -9,9 +9,10 @@ import { CustomerType } from '../../../shared/constant';
 import { startWith } from 'rxjs';
 
 @Component({
-  selector: 'app-basic-info',
-  templateUrl: './basic-info.component.html',
-  styleUrl: './basic-info.component.scss'
+    selector: 'app-basic-info',
+    templateUrl: './basic-info.component.html',
+    styleUrl: './basic-info.component.scss',
+    standalone: false
 })
 export class BasicInfoComponent {
   basicInfoForm!: FormGroup;

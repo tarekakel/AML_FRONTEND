@@ -8,11 +8,10 @@ import { ToastrService } from 'ngx-toastr';
 import { matchEmailAndPassword } from '../../validators/match-fields.validator';
 import { complexPasswordValidator } from '../../validators/password.validator';
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+    selector: 'app-register',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.scss'
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;

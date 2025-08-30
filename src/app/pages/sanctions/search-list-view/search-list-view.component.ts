@@ -12,9 +12,10 @@ import { formatDate } from '../../../shared/helper/helper';
 import { AUDIT_REPORT_ALL_CODE } from '../../../shared/constant';
 
 @Component({
-  selector: 'app-search-list-view',
-  templateUrl: './search-list-view.component.html',
-  styleUrl: './search-list-view.component.scss'
+    selector: 'app-search-list-view',
+    templateUrl: './search-list-view.component.html',
+    styleUrl: './search-list-view.component.scss',
+    standalone: false
 })
 export class SearchListViewComponent implements OnInit {
   rows: RequestItem[] = [];

@@ -32,6 +32,15 @@ export const mainLayoutRoutes: Routes = [
         title: 'sanction Information'
 
       },
+
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('../pages/dashboard/dashboard.module')
+            .then(m => m.DashboardModule),
+        title: 'sanction Information'
+
+      },
       // Add more child routes here
     ]
   }

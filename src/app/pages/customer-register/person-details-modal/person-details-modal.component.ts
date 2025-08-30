@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-person-details-modal',
-
-  templateUrl: './person-details-modal.component.html',
-  styleUrl: './person-details-modal.component.scss'
+    selector: 'app-person-details-modal',
+    templateUrl: './person-details-modal.component.html',
+    styleUrl: './person-details-modal.component.scss',
+    standalone: false
 })
 export class PersonDetailsModalComponent {
 

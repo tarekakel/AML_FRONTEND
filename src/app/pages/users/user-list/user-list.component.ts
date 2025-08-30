@@ -9,9 +9,10 @@ import { ToastrService } from 'ngx-toastr';
 import {extractErrorMessage} from '../../../shared/helper/helper'
 import { AuthService } from '../../../auth/auth.service';
 @Component({
-  selector: 'app-users',
-  templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.scss'
+    selector: 'app-users',
+    templateUrl: './user-list.component.html',
+    styleUrl: './user-list.component.scss',
+    standalone: false
 })
 export class UsersComponent {
   res: any;
