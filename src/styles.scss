@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 
 /* styles.css or styles.scss */
 
@@ -78,4 +79,108 @@
 .toast-success .toast-title,
 .toast-success .toast-message {
     color: #ffffff !important;
+}
+
+
+// styles.scss
+
+/* 2.1. Datepicker container */
+.custom-datepicker {
+    .bs-datepicker {
+        background: #1a202c;
+        /* dark background */
+        border-radius: 0.5rem;
+        /* rounded corners */
+        padding: 0.5rem;
+        width: 200px;
+        /* fixed width */
+    }
+
+    /* 2.2. Header (month/year selector) */
+    .bs-datepicker-head {
+        background-color: #2d3748;
+        color: #edf2f7;
+        font-weight: bold;
+    }
+
+    /* 2.3. Date cells */
+    .bs-datepicker-body {
+        table {
+            width: 100%;
+
+            td.day-cell {
+                height: 2.5rem;
+                /* cell height */
+                width: 2.5rem;
+                /* cell width */
+                text-align: center;
+                transition: background 0.2s;
+
+                &:hover {
+                    background-color: #4a5568;
+                    cursor: pointer;
+                    /* pointer on hover */
+                }
+
+                &.current {
+                    background-color: #ED8936 !important;
+                    /* bright orange */
+                    color: #ffffff !important;
+                    /* white text */
+                }
+
+
+                /* Selected / Active cell */
+                &.selected,
+                &.active {
+                    background-color: #48BB78 !important;
+                    /* minty green */
+                    color: #ffffff !important;
+                    /* white text */
+                }
+
+
+
+
+
+
+
+                &.disabled {
+                    color: #718096;
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+
+    /* 2.4. Footer (today & clear buttons) */
+    .bs-datepicker-footer {
+        button {
+            margin: 0.25rem;
+            background: transparent;
+            border: 1px solid #4a5568;
+            color: #edf2f7;
+
+            &:hover {
+                background-color: #4a5568;
+            }
+
+        }
+    }
+}
+
+/* “Today” marker */
+span.current.ng-star-inserted {
+    background-color: #ECC94B !important;
+    /* warm yellow */
+    color: #1A202C !important;
+    /* dark text */
+}
+
+/* “Selected” day */
+span.selected.ng-star-inserted {
+    background-color: #54708B !important;
+    /* your custom blue */
+    color: #F7FAFC !important;
+    /* almost-white text */
 }

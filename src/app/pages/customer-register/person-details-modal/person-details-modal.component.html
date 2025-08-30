@@ -1,0 +1,56 @@
+<div *ngIf="visible" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg shadow-lg max-w-3xl w-full p-6 overflow-y-auto max-h-[80vh]">
+    <!-- Header -->
+    <h2 class="text-xl font-semibold mb-4">Person Details</h2>
+
+    <div class="grid grid-cols-2 gap-4 mb-2">
+      <div class="font-semibold">Full Name:</div>
+      <div>{{ getFullName() }}</div>
+
+      <div class="font-semibold">Nationality:</div>
+      <div>{{ details?.INDIVIDUAL?.NATIONALITY?.VALUE }}</div>
+
+      <div class="font-semibold">UN List Type:</div>
+      <div>{{ details?.INDIVIDUAL?.UN_LIST_TYPE }}</div>
+
+      <div class="font-semibold">Reference Number:</div>
+      <div>{{ details?.INDIVIDUAL?.REFERENCE_NUMBER }}</div>
+
+      <div class="font-semibold">Date of Birth:</div>
+      <div>{{ details?.INDIVIDUAL?.INDIVIDUAL_DATE_OF_BIRTH?.DATE }}</div>
+
+      <div class="font-semibold">Place of Birth:</div>
+      <div>
+        {{ details?.INDIVIDUAL?.INDIVIDUAL_PLACE_OF_BIRTH?.STATE_PROVINCE }},
+        {{ details?.INDIVIDUAL?.INDIVIDUAL_PLACE_OF_BIRTH?.COUNTRY }}
+      </div>
+    </div>
+
+    <!-- Aliases -->
+    <div class="mb-2">
+      <div class="font-semibold">Aliases:</div>
+      <ul class="list-disc list-inside">
+        <li *ngFor="let alias of getAliases()">
+          {{ alias.ALIAS_NAME }} ({{ alias.QUALITY }})
+        </li>
+      </ul>
+    </div>
+
+    <!-- Last Updated -->
+    <div class="mb-2">
+      <div class="font-semibold">Last Updated:</div>
+      <div>{{ getLastUpdated() }}</div>
+    </div>
+
+    <!-- Comments -->
+    <div class="mb-2">
+      <div class="font-semibold">Comments:</div>
+      <p class="whitespace-pre-line">{{ details?.INDIVIDUAL?.COMMENTS1 }}</p>
+    </div>
+
+    <!-- Close Button -->
+    <div class="flex justify-end mt-4">
+      <button (click)="closeModal()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Close</button>
+    </div>
+  </div>
+</div>

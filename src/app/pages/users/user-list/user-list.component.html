@@ -25,7 +25,7 @@
                 <tr>
                     <th class="px-6 py-3">#</th>
                     <th class="px-6 py-3">Email</th>
-                    <th class="px-6 py-3">Username</th>
+                    <!-- <th class="px-6 py-3">Username</th> -->
                     <th class="px-6 py-3">Avatar</th>
                     <th class="px-6 py-3 text-center">Actions</th>
                 </tr>
@@ -35,17 +35,25 @@
                 <tr *ngFor="let user of res?.data; let i = index" class="hover:bg-gray-50">
                     <td class="px-6 py-4">{{ i + 1 }}</td>
                     <td class="px-6 py-4">{{ user.email }}</td>
-                    <td class="px-6 py-4">{{ user.username }}</td>
+                    <!-- <td class="px-6 py-4">{{ user.username }}</td> -->
                     <td class="px-6 py-4">
-                        <img [src]="user.avatar || 'https://via.placeholder.com/40'" alt="Avatar"
-                            class="h-10 w-10 rounded-full object-cover">
+                        <img [src]="user.avatar_url ?? 'assets/images/default-avatar.svg'" alt="Avatar"
+                            class="h-10 w-10 rounded-full object-cover" />
                     </td>
+
                     <td class="px-6 py-4 text-center space-x-2">
                         <button class="px-3 py-1 bg-green-500 text-white rounded-md text-xs hover:bg-green-600"
                             (click)="openModal(user)">Edit</button>
                         <button
                             class="px-3 py-1 bg-red-500 text-white rounded-md text-xs hover:bg-red-600">Delete</button>
+                        <button class="px-3 py-1 bg-yellow-500 text-white rounded-md text-xs hover:bg-yellow-600"
+                            (click)="resetPassword(user)">
+                            Reset Password
+                        </button>
                     </td>
+
+
+
                 </tr>
             </tbody>
         </table>
@@ -72,3 +80,7 @@
 
     <app-user-modal [user]="selectedUser" [show]="showModal" (save)="saveUser($event)"
         (close)="showModal = false"></app-user-modal>
+
+    <app-confim-dialoge [show]="showConfirmModal" [isLoading]="isResetLoading" [title]="'Reset Password'"
+        [message]="'Reset password for ' + selectedUser?.email + '?'" (confirm)="handleConfirm()"
+        (cancel)="handleCancel()"></app-confim-dialoge>

@@ -1,0 +1,40 @@
+<div *ngIf="show" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-white rounded-lg shadow-xl p-6 w-96 space-y-4">
+    <h2 class="text-lg font-semibold text-gray-800">{{ title }}</h2>
+    <p class="text-sm text-gray-600">{{ message }}</p>
+
+      <!-- Optional Notes Field -->
+    <div *ngIf="showNoteField" class="space-y-1">
+      <label for="note" class="block text-sm font-medium text-gray-700">
+        Notes
+      </label>
+      <textarea
+        id="note"
+        name="note"
+        [(ngModel)]="note"
+        rows="4"
+        placeholder="Enter your note here…"
+        class="block w-full px-3 py-2 border border-gray-300 rounded-md 
+               shadow-sm focus:outline-none focus:ring-indigo-500 
+               focus:border-indigo-500 resize-y"
+      ></textarea>
+    </div>
+
+    <div class="relative">
+      <div class="flex justify-end space-x-2 pt-4">
+        <button class="px-3 py-1 text-sm rounded bg-gray-200 hover:bg-gray-300" (click)="onCancel()">
+          Cancel
+        </button>
+        <button class="px-3 py-1 text-sm rounded bg-yellow-500 text-white hover:bg-yellow-600" (click)="onConfirm()"
+          [disabled]="isLoading">
+          Confirm
+        </button>
+      </div>
+
+      <!-- Loader positioned over the modal -->
+      <div *ngIf="isLoading" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-60 z-10">
+        <app-loader></app-loader>
+      </div>
+    </div>
+  </div>
+</div>

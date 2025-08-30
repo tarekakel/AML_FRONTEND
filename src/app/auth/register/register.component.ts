@@ -40,7 +40,6 @@ export class RegisterComponent implements OnInit {
     if (this.form.invalid) return;
     this.auth.register(this.form.value).subscribe({
       next: (response) => {
-        console.log(response);
         const apiResponse: ApiResponse<any> = response;
         if (apiResponse.isSuccess) {
           this.toastr.success('Registration successful!', 'Success');
@@ -49,10 +48,8 @@ export class RegisterComponent implements OnInit {
       error: (err) => {
 
         const apiResponse: ApiResponse<any> = err.error;
-
         if (apiResponse?.errors?.length) {
           this.error = apiResponse.errors.map(msg => `*${msg}`);
-
         } else {
           this.toastr.error('Unexpected error occurred.', 'Error');
         }

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './auth/auth.service';
+import { UserService } from './services/user/user.service';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -11,5 +14,6 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'kidsportal-frontend';
+  title = 'AML';
+ 
 }

@@ -7,7 +7,7 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-    const token = localStorage.getItem('access');
+    const token = localStorage.getItem('access_token');
     let authReq = req;
     const router = inject(Router);
     const toastr = inject(ToastrService);
@@ -22,10 +22,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
     return next(authReq).pipe(
         catchError((error) => {
+            console.log(error);
+            
             if (error.status === 401) {
                 toastr.error('Your session has expired. Please log in again.', 'Unauthorized');
                 auth.logout();
             }
+             
             return throwError(() => error);
         })
     );

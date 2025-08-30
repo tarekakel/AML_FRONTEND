@@ -2,9 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { User } from '../../../models/user';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { UserService } from '../../../services/user/user.service';
+import { UserService } from '../../../services/user/user.service';
+import { ApiResponse } from '../../../models/shared';
+import { ToastrService } from 'ngx-toastr';
 // import { ApiResponse } from '../../../models/shared';
-
+import {extractErrorMessage} from '../../../shared/helper/helper'
+import { AuthService } from '../../../auth/auth.service';
 @Component({
   selector: 'app-users',
   templateUrl: './user-list.component.html',
@@ -14,81 +17,105 @@ export class UsersComponent {
   res: any;
   isEditing = false;
   editingUserId: number | null = null;
-  userForm: FormGroup;
   searchTerm = '';
   page = 1;
   pageSize = 10;
-  totalPages = 1;
-  totalCount = 0;
+  totalPages: number = 0;
+  totalCount: number = 0;
   isLoading = false;
+  isResetLoading = false;
+  showConfirmModal = false;
 
   showModal = false;
   selectedUser: User | null = null;
-  // private userService: UserService, 
-  constructor(private fb: FormBuilder) {
-    this.userForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      role: ['', Validators.required],
-    });
+
+  constructor(private userService: UserService, private toastr: ToastrService, private authService: AuthService) {
+
   }
 
   ngOnInit() {
 
-    //   this.loadUsers();
+    this.loadUsers();
   }
 
-  // loadUsers() {
-  //   this.isLoading = true;
+  loadUsers() {
+    this.isLoading = true;
 
-  //   this.userService
-  //     .getUsers(this.page, this.pageSize, this.searchTerm)
-  //     .subscribe((res) => {
+    this.userService
+      .getUsers(this.page, this.pageSize, this.searchTerm)
+      .subscribe((result: ApiResponse<User[]>) => {
 
-  //       this.res = res;
-  //       this.totalCount = res.page_count;
-  //       this.totalPages = res.total_pages;
-  //       this.isLoading = false;
-  //     });
-  // }
+        this.res = result;
+        this.totalCount = this.res.meta.total;
+        this.totalPages = this.res.meta.totalPages;
+        this.isLoading = false;
+      });
+  }
 
   onSearchChange() {
     this.page = 1;
-    //   this.loadUsers();
+    this.loadUsers();
   }
 
   goToPage(pageNumber: number) {
-    if (pageNumber < 1 || pageNumber > this.totalPages) return;
+    // if (pageNumber < 1 || pageNumber > this.totalPages) return;
     this.page = pageNumber;
-    //  this.loadUsers();
+    this.loadUsers();
   }
 
   startEdit(user: User) {
     this.isEditing = true;
     this.editingUserId = user.id;
-    this.userForm.patchValue({
-      name: user.username,
-      email: user.email,
-      role: user.role,
-    });
+    // this.userForm.patchValue({
+    //   name: user.username,
+    //   email: user.email,
+    //   role: user.role,
+    // });
   }
 
   cancelEdit() {
     this.isEditing = false;
     this.editingUserId = null;
-    this.userForm.reset();
+    // this.userForm.reset();
   }
 
   saveUser(user: User) {
-    if (this.userForm.invalid) return;
 
-    const userData = this.userForm.value;
+    // Decide which API call to make
     this.showModal = false;
-    if (this.isEditing && this.editingUserId !== null) {
-      //   this.userService.updateUser({ id: this.editingUserId, ...userData });
-    } else {
-      //    this.userService.addUser(userData);
-    }
+
+    const obs$ = user.id
+      ? this.userService.updateUser(user)
+      : this.userService.addUser(user);
+    obs$.subscribe({
+      next: (result: ApiResponse<User>) => {
+
+        const action = user.id ? 'updated' : 'created';
+        if (result.isSuccess) {
+          this.toastr.success(`User successfully ${action}.`);
+          this.loadUsers();
+        }
+        else {
+          const msg = extractErrorMessage(result.errors);
+          this.toastr.error(msg, 'Error');
+        }
+
+      },
+      error: (err: any) => {
+
+        const action = user.id ? 'updating' : 'creating';
+
+        const msg = extractErrorMessage(err.error);
+        this.toastr.error(msg, 'Error');
+      }
+    });
+
+
+    // if (user.id) {
+    //   this.userService.updateUser(user).subscribe(console.log);;
+    // } else {
+    //   this.userService.addUser(user).subscribe(console.log);
+    // }
 
     this.cancelEdit();
   }
@@ -106,8 +133,32 @@ export class UsersComponent {
   }
 
 
-  // Function to get form control easily in template or TS
-  getControl(controlName: string) {
-    return this.userForm.get(controlName);
+
+  resetPassword(user: any) {
+    this.selectedUser = user;
+    this.showConfirmModal = true;
   }
+
+  handleCancel() {
+    this.showConfirmModal = false;
+    this.selectedUser = null;
+  }
+
+  handleConfirm() {
+    this.isResetLoading = true;
+    this.authService.requestPasswordReset(this.selectedUser!.email).subscribe({
+      next: () => {
+        this.toastr.success('Password reset email sent.', 'success');
+        this.showConfirmModal = false;
+        this.isResetLoading = false;
+      },
+      error: () => {
+        this.toastr.error('Error sending reset email.', 'error');
+        this.showConfirmModal = false;
+        this.isResetLoading = false;
+      },
+
+    });
+  }
+
 }

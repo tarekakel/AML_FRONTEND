@@ -30,6 +30,7 @@
               "src/favicon.ico"
             ],
             "styles": [
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -87,6 +88,7 @@
               "src/favicon.ico"
             ],
             "styles": [
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.scss"
             ],
             "scripts": []

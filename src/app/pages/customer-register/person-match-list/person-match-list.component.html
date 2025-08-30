@@ -1,0 +1,138 @@
+<div *ngIf="fuzzySearchRes?.matches?.length; else noMatches">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    First Name
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Last Name
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Date of Birth
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Nationality
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Match Score
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                </th>
+                <th class="px-4 py-2"></th>
+
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            <ng-container *ngFor="let m of fuzzySearchRes.matches;  trackBy: trackByMatchId">
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">{{ m.first_name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ m.last_name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {{ m.date_of_birth | date:'mediumDate' }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ m.nationality }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full"
+                            [ngClass]="getScoreClasses(m.total_score)">
+                            {{ formatPct(m.total_score) }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span *ngIf="m.status === 'rejected'"
+                            class="px-2 py-0.5 text-xs rounded-full bg-red-100 text-red-800">
+                            Rejected
+                        </span>
+
+                        <span *ngIf="m.status === 'accepted'"
+                            class="px-2 py-0.5 text-xs rounded-full bg-green-100 text-green-800">
+                            Accepted
+                        </span>
+
+                        <span *ngIf="m.status === 'pending'"
+                            class="px-2 py-0.5 text-xs rounded-full bg-yellow-100 text-yellow-800">
+                            Pending
+                        </span>
+
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <!-- Auto-Reject Badge -->
+                        <span *ngIf="m.auto_reject"
+                            class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                            Auto Rejected
+                        </span>
+
+
+                        <div *ngIf="!m.auto_reject" class="flex space-x-2">
+                            <!-- Accept Button -->
+                            <button (click)="openConfirm('Accept',m)"
+                                class="inline-flex items-center px-3 py-1 text-sm font-semibold text-green-800 bg-green-100 rounded hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-300"
+                                aria-label="Accept match">
+                                <!-- Check Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8.414 8.414a1 1 0 01-1.414 
+                     0L3.293 10.707a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 
+                     1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                Accept
+                            </button>
+
+                            <!-- Reject Button -->
+                            <button (click)="openConfirm('Reject',m)"
+                                class="inline-flex items-center px-3 py-1 text-sm font-semibold text-red-800 bg-red-100 rounded hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-300"
+                                aria-label="Reject match">
+                                <!-- X Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 8.586l-4.95-4.95a1 1 0 00-1.414 
+                     1.414L8.586 10l-4.95 4.95a1 1 0 101.414 
+                     1.414L10 11.414l4.95 4.95a1 1 0 001.414-1.414L11.414 
+                     10l4.95-4.95a1 1 0 00-1.414-1.414L10 8.586z" clip-rule="evenodd" />
+                                </svg>
+                                Reject
+                            </button>
+                        </div>
+                    </td>
+                    <td class="px-4 py-2 text-right">
+                        <button (click)="openModal(m.details_dict)"
+                            class="text-blue-600 hover:underline focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                title="View Details" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+
+                        </button>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #noMatches>
+    <div class="text-center py-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-16 w-16 text-gray-300" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 17v-4h6v4m2 4H7a2 2 0 01-2-2V7a2 2 0 012-2h5l2 2h5a2 2 0 012 2v12a2 2 0 01-2 2z" />
+        </svg>
+        <p class="mt-4 text-gray-500 text-lg font-medium">No Matches found!</p>
+        <!-- <p class="mt-1 text-gray-400 text-sm">Try adjusting your filters or date range</p> -->
+    </div>
+</ng-template>
+<app-confim-dialoge [show]="showConfirmModal" [isLoading]="isLoading" [title]="'Confirm Action'" [message]="mssage"
+    [showNoteField]="true" (confirm)="handleConfirm($event)" (cancel)="handleCancel()"></app-confim-dialoge>
+
+<app-confim-dialoge [show]="showReloadModal" [isLoading]="isLoading" [title]="'Confirm Action'" [message]="mssage"
+    (confirm)="onReloadConfirm()" (cancel)="onReloadCancel()"></app-confim-dialoge>
+
+<app-person-details-modal [details]="selectedDetails" [visible]="modalVisible"
+    (close)="modalVisible = false"></app-person-details-modal>

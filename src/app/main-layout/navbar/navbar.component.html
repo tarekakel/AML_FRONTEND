@@ -1,5 +1,11 @@
 <!-- Keep only navbar actions -->
-<nav class="bg-white shadow px-4 py-3 flex justify-end items-center">
+<nav class="h-16 bg-white shadow px-4 py-3 flex justify-end items-center">
   <!-- Example: profile button -->
-  <button class="text-sm bg-blue-500 text-white px-4 py-2 rounded">Login</button>
+  <div class="flex items-center space-x-3">
+    <img src="{{ result?.data?.user?.avatar_url || 'assets/images/avatar-default-svgrepo-com.svg' }}" alt="User"
+      class="h-8 w-8 rounded-full">
+    <span class="font-medium text-gray-800 truncate">{{this.result?.data?.user?.first_name}} -
+      {{this.result?.data?.user?.last_name}} </span>
+  </div>
+
 </nav>

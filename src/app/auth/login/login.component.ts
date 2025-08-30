@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent {
   error = '';
 
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private userService: UserService) {
 
 
     this.form = this.fb.group({
@@ -30,7 +31,12 @@ export class LoginComponent {
     const { username, password } = this.form.value;
 
     this.auth.login({ username, password }).subscribe({
-      next: () => this.router.navigate(['/']),
+      next: () => {
+       // this.userService.getCurrentUser().subscribe(console.log)
+        this.router.navigate(['/main/customer-register/wizard/step/1'])
+
+
+      },
       error: () => this.error = 'Invalid credentials',
     });
   }

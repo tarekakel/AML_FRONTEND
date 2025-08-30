@@ -1,7 +1,7 @@
 <aside class="h-full bg-white shadow flex flex-col transition-all duration-700 ease-in-out">
   <!-- <aside class="bg-white shadow h-full transition-all duration-500 flex flex-col"> -->
 
-  <div class="flex items-center justify-center p-4 border-b">
+  <div class="h-16 flex items-center justify-center p-4 border-b">
     <img src="assets/images/sidebar-icon.png" alt="Logo" class="h-8 w-8 mr-2">
     <span class="text-lg font-bold" *ngIf="!collapsed">AML Portal</span>
   </div>
@@ -21,27 +21,69 @@
   </div>
 
   <!-- Menu Items -->
-  <ul class="flex-1 p-4 space-y-2">
-    <li>
-      <a routerLink="/dashboard" class="flex items-center p-2 space-x-2 rounded transition-all duration-150 
-                hover:bg-blue-100 hover:text-blue-700 group cursor-pointer">
-        <svg class="h-5 w-5 text-gray-600 group-hover:text-blue-700" fill="none" stroke="currentColor" stroke-width="2"
-          viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6m-6 0H7m6 0v6" />
-        </svg>
-        <span *ngIf="!collapsed">Dashboard</span>
-      </a>
-    </li>
-    <li>
-      <a routerLink="/main/users/users-list" class="flex items-center p-2 space-x-2 rounded transition-all duration-150 
-                hover:bg-blue-100 hover:text-blue-700 group cursor-pointer">
-        <svg class="h-5 w-5 text-gray-600 group-hover:text-blue-700" fill="none" stroke="currentColor" stroke-width="2"
-          viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M5.121 17.804A8 8 0 0112 16c2.21 0 4.208.895 5.66 2.344M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-        <span *ngIf="!collapsed">Users</span>
-      </a>
-    </li>
-  </ul>
+  <!-- Dynamic Menu -->
+  <nav class="flex-1 overflow-y-auto">
+    <ul class="p-2 space-y-1">
+      <ng-container *ngFor="let parent of menuTree">
+        <li>
+          <a *ngIf="!parent.children?.length" [routerLink]="parent.path"
+            class="flex items-center justify-start p-2 rounded hover:bg-blue-100 hover:text-blue-700 transition-colors">
+            <!-- Icon -->
+            <ng-container *ngIf="parent.icon.endsWith('.svg') || parent.icon.endsWith('.png'); else fontIcon">
+              <img [src]="parent.icon" alt="{{ parent.name }}" class="h-5 w-5 text-gray-600 flex-shrink-0" />
+            </ng-container>
+            <ng-template #fontIcon>
+              <i [class]="parent.icon + ' h-5 w-5 text-gray-600 flex-shrink-0'"></i>
+            </ng-template>
+
+            <!-- Label -->
+            <span class="ml-2 truncate" *ngIf="!collapsed">{{ parent.name }}</span>
+          </a>
+
+          <div *ngIf="parent.children?.length"
+            class="flex items-center justify-start p-2 rounded hover:bg-blue-100 hover:text-blue-700 transition-colors cursor-pointer"
+            (click)="parent.children?.length ? toggleMenu(parent.id) : null">
+            <!-- Icon -->
+            <ng-container *ngIf="parent.icon.endsWith('.svg') || parent.icon.endsWith('.png'); else fontIcon">
+              <img [src]="parent.icon" alt="{{ parent.name }}" class="h-5 w-5 text-gray-600 flex-shrink-0" />
+            </ng-container>
+            <ng-template #fontIcon>
+              <i [class]="parent.icon + ' h-5 w-5 text-gray-600 flex-shrink-0'"></i>
+            </ng-template>
+
+            <!-- Label -->
+            <span class="ml-2 truncate" *ngIf="!collapsed">{{ parent.name }}</span>
+
+            <!-- Toggle Arrow -->
+            <svg *ngIf="parent.children?.length && !collapsed" (click)="toggleMenu(parent.id)"
+              class="h-4 w-4 text-gray-600 transition-transform ml-auto"
+              [ngClass]="{ 'rotate-90': isExpanded(parent.id) }" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+
+          <!-- Child Menus -->
+          <ul *ngIf="isExpanded(parent.id)" class="ml-6 mt-1 space-y-1   pl-2">
+            <li *ngFor="let child of parent.children">
+              <a [routerLink]="child.path"
+                class="flex items-center p-2 rounded hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                <!-- Child Icon -->
+                <ng-container *ngIf="child.icon?.endsWith('.svg') || child.icon?.endsWith('.png'); else childFontIcon">
+                  <img [src]="child.icon" alt="{{ child.name }}" class="h-4 w-4 text-gray-600 flex-shrink-0" />
+                </ng-container>
+                <ng-template #childFontIcon>
+                  <i [class]="child.icon + ' h-4 w-4 text-gray-600 flex-shrink-0'"></i>
+                </ng-template>
+
+                <!-- Label -->
+                <span class="ml-2 text-sm truncate" *ngIf="!collapsed">{{ child.name }}</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+    </ul>
+  </nav>
+
 </aside>
