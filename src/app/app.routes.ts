@@ -7,6 +7,7 @@ import { sanctionRoutes } from './pages/sanctions/sanction-rounting-module';
 export const routes: Routes = [
     ...authRoutes,                 // No layout for login/register
     ...mainLayoutRoutes,  
+ 
    
     { path: '', redirectTo: '/auth/login', pathMatch: 'full', title: 'Login' },
     {

@@ -38,6 +38,15 @@ export const mainLayoutRoutes: Routes = [
         loadChildren: () =>
           import('../pages/dashboard/dashboard.module')
             .then(m => m.DashboardModule),
+        title: 'dashboard'
+
+      },
+
+      {
+        path: 'ram',
+        loadChildren: () =>
+          import('../pages/risk/risk.module')
+            .then(m => m.RiskModule),
         title: 'sanction Information'
 
       },

@@ -32,7 +32,7 @@ export class LoginComponent {
     this.auth.login({ username, password }).subscribe({
       next: () => {
        // this.userService.getCurrentUser().subscribe(console.log)
-        this.router.navigate(['/main/customer-register/wizard/step/1'])
+        this.router.navigate(['/main/dashboard'])
 
 
       },
