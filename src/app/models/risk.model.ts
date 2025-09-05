@@ -11,7 +11,7 @@ export interface RiskFactor {
 }
 
 export interface RiskFactorGroup {
-  id?: number;
+  id: number;
   name: string;
   description: string;
   is_active: boolean;

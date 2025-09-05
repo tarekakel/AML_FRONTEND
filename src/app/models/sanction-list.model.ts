@@ -27,3 +27,9 @@ export interface RequestItem {
   results: ResultItem[];
 }
 
+
+export interface RiskDataType {
+  id: number;
+  name: string;
+  description: string;
+}
